@@ -1,21 +1,23 @@
 package com.jobportal.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.jobportal.model.enums.WorkArrangement;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Embeddable
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String city;
+    private String state;
+    private String country;
+
+    @Enumerated(EnumType.STRING)
+    private WorkArrangement workArrangement;
 }
+

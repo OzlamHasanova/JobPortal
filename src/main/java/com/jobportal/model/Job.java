@@ -1,5 +1,11 @@
 package com.jobportal.model;
 
+import com.jobportal.model.Location;
+import com.jobportal.model.SalaryRange;
+import com.jobportal.model.enums.EducationLevel;
+import com.jobportal.model.enums.ExperienceLevel;
+import com.jobportal.model.enums.Industry;
+import com.jobportal.model.enums.JobType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,30 +27,46 @@ public class Job {
     private Long id;
 
     private String jobTitle;
-    private String companyName;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Location location;
-    private String jobType;
-    private String salaryRange;
-    private String jobDescription;// todo
 
-//    @Lob
+    private String companyName;
+
+    @Embedded
+    private Location location;
+
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
+
+    @Embedded
+    private SalaryRange salaryRange;
+
+    @Column(columnDefinition = "TEXT")
+    private String jobDescription;
+
+    @Column(columnDefinition = "TEXT")
     private String requirements;
 
-    private String experienceLevel;
-    private String educationLevel;
-    private String industry;
+    @Enumerated(EnumType.STRING)
+    private ExperienceLevel experienceLevel;
+
+    @Enumerated(EnumType.STRING)
+    private EducationLevel educationLevel;
+
+    @Enumerated(EnumType.STRING)
+    private Industry industry;
 
     private LocalDate postedDate;
+
     private LocalDate applicationDeadline;
 
     private String howToApply;
-    private String companyLogo;
-    private String benefits;
 
-//    @ElementCollection
-//    private List<String> tags;
+    private String companyLogoUrl;
+
+    @ElementCollection
+    private List<String> benefits;
+
+    @ElementCollection
+    private List<String> tags;
 
     private String source;
 }
-
