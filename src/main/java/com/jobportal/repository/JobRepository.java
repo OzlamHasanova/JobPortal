@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 
 @Repository
-public interface JobRepository extends JpaRepository <Job, Long> {
+public interface JobRepository extends JpaRepository <Job, Long>, JpaSpecificationExecutor<Job> {
 
     Page<Job> findByLocation_CityContaining(String city, Pageable pageable);
     Page<Job> findByJobType(JobType jobType, Pageable pageable);

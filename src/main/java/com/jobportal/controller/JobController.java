@@ -1,10 +1,16 @@
 package com.jobportal.controller;
 
 import com.jobportal.dto.JobResponse;
+import com.jobportal.dto.PagedResponse;
 import com.jobportal.service.JobService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,28 +26,41 @@ public class JobController {
     private final JobService jobService;
 
 
+    @Operation(summary = "Get all jobs without sort")
     @GetMapping
-    public Page<JobResponse> getAllJobs(Pageable pageable) {
-        return jobService.getAllJobs(pageable);
+    public ResponseEntity<PagedResponse<JobResponse>> getAllJobs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<JobResponse> jobs = jobService.getAllJobs(page, size);
+        return ResponseEntity.ok(jobs);
     }
 
     @GetMapping("/filter")
-    public Page<JobResponse> filterJobs(@RequestParam(required = false) String location,
-                                        @RequestParam(required = false) String jobType,
-                                        @RequestParam(required = false) String experienceLevel,
-                                        @RequestParam(required = false) String industry,
-                                        @RequestParam(required = false) String tags,
-                                        Pageable pageable) {
-        return jobService.filterJobs(location, jobType, experienceLevel, industry, tags, pageable);
+    public ResponseEntity<PagedResponse<JobResponse>> filterJobs(@RequestParam(required = false) String location,
+                                                                 @RequestParam(required = false) String jobType,
+                                                                 @RequestParam(required = false) String experienceLevel,
+                                                                 @RequestParam(required = false) String industry,
+                                                                 @RequestParam(required = false) String tags,
+                                                                 @RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(jobService.filterJobs(location, jobType, experienceLevel, industry, tags, pageable));
     }
 
     @GetMapping("/sort/posted-date")
-    public Page<JobResponse> sortByPostedDate(Pageable pageable) {
-        return jobService.sortByPostedDate(pageable);
+    public ResponseEntity<PagedResponse<JobResponse>> sortByPostedDate(@RequestParam(defaultValue = "0") int page,
+                                                                       @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "postedDate"));
+        return ResponseEntity.ok(jobService.sortByPostedDate(pageable));
     }
 
     @GetMapping("/sort/salary-range")
-    public Page<JobResponse> sortBySalaryRange(@RequestParam BigDecimal minSalary, @RequestParam BigDecimal maxSalary, Pageable pageable) {
-        return jobService.sortBySalaryRange(minSalary, maxSalary, pageable);
+    public ResponseEntity<PagedResponse<JobResponse>> sortBySalaryRange(@RequestParam BigDecimal minSalary,
+                                                                        @RequestParam BigDecimal maxSalary,
+                                                                        @RequestParam(defaultValue = "0") int page,
+                                                                        @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(jobService.sortBySalaryRange(minSalary, maxSalary, pageable));
     }
 }

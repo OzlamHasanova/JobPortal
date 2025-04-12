@@ -1,18 +1,16 @@
 package com.jobportal.dto;
 
-import com.jobportal.model.enums.ExperienceLevel;
-import com.jobportal.model.enums.Industry;
-import com.jobportal.model.enums.JobType;
 import lombok.Data;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 public class JobFilterRequest {
     private String location;
-    private JobType jobType;
-    private ExperienceLevel experienceLevel;
-    private Industry industry;
-    private List<String> tags;
+    private String jobType;
+    private String experienceLevel;
+    private String industry;
+    private String tags;
+    private BigDecimal minSalary;
+    private BigDecimal maxSalary;
 }
-
