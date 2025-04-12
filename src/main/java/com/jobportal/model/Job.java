@@ -1,7 +1,5 @@
 package com.jobportal.model;
 
-import com.jobportal.model.Location;
-import com.jobportal.model.SalaryRange;
 import com.jobportal.model.enums.EducationLevel;
 import com.jobportal.model.enums.ExperienceLevel;
 import com.jobportal.model.enums.Industry;

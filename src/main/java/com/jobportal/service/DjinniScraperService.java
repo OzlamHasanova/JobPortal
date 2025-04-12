@@ -77,7 +77,7 @@ public class DjinniScraperService {
         }
     }
 
-    private Document fetchDocument(String url) {
+    Document fetchDocument(String url) {
         try {
             return Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
