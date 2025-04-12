@@ -16,5 +16,7 @@ import java.math.BigDecimal;
 public class SalaryRange {
     private BigDecimal min;
     private BigDecimal max;
+
+
 }
 

@@ -19,5 +19,9 @@ public class Location {
 
     @Enumerated(EnumType.STRING)
     private WorkArrangement workArrangement;
+
+
+    public Location(String location, String remote) {
+    }
 }
 
